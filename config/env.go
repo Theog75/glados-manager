@@ -7,17 +7,26 @@ import (
 
 const (
 	// Environment Variables
-	EnvPort = "LISTEN_PORT"
+	EnvPort           = "LISTEN_PORT"
+	EnvKubeConfigPath = "KUBE_CONFIG_PATH"
 )
 
 var (
-	Port string
+	Port           string
+	KubeConfigPath string
 )
 
 //ReadEnv read the environment variables and store them in the configuration files
 func ReadEnv() {
-	var err error
 	Port = os.Getenv(EnvPort)
+	KubeConfigPath = GetEnv(EnvKubeConfigPath, "")
+	if KubeConfigPath == "" {
+
+		// fmt.Println(EnvKubeConfigPath, "is not set.  Using default.")
+
+		KubeConfigPath = "/ocpcluster-kube/ocpcluster-config-3.11"
+
+	}
 
 }
 
